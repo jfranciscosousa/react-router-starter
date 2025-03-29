@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgres"
-  url               = env("DATABASE_PRISMA_URL")
+  provider = "postgres"
+  url      = env("DATABASE_PRISMA_URL")
 }
 
 model Note {
