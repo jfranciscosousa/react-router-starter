@@ -127,8 +127,8 @@ importers:
         specifier: ^0.6.1
         version: 0.6.1
       '@types/accept-language-parser':
-        specifier: ^1.5.7
-        version: 1.5.7
+        specifier: ^1.5.8
+        version: 1.5.8
       '@types/lodash':
         specifier: ^4.17.16
         version: 4.17.16
@@ -1404,8 +1404,8 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  '@types/accept-language-parser@1.5.7':
-    resolution: {integrity: sha512-bFq8qAT6yYi1kgeO2Wk+/ciZSos6UB7q0gic+rzNrT0tRdVm5ZF5+Ou+EHdLWedP0607LO0SKd66ylhKTypS3w==}
+  '@types/accept-language-parser@1.5.8':
+    resolution: {integrity: sha512-6+dKdh9q/I8xDBnKQKddCBKaWBWLmJ97HTiSbAXVpL7LEgDfOkKF98UVCaZ5KJrtdN5Wa5ndXUiqD3XR9XGqWQ==}
 
   '@types/aria-query@4.2.2':
     resolution: {integrity: sha512-HnYpAE1Y6kRyKM/XkEuiRQhTHvkzMBurTHnpFLYLBGPIylZNPs9jJcuOOYWxPLJCSEtmZT0Y8rHDokKN7rRTig==}
@@ -5083,7 +5083,7 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
-  '@types/accept-language-parser@1.5.7': {}
+  '@types/accept-language-parser@1.5.8': {}
 
   '@types/aria-query@4.2.2': {}
 
