@@ -67,7 +67,7 @@
     "@testing-library/react": "^16.3.0",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/accept-language-parser": "^1.5.7",
-    "@types/lodash": "^4.17.16",
+    "@types/lodash": "^4.17.17",
     "@types/node": "^22.15.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.3",
