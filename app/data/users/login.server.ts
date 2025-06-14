@@ -2,12 +2,12 @@ import { User } from "@prisma/client";
 import prisma from "../utils/prisma.server";
 import { verifyPassword } from "./passwordUtils.server";
 import { DataResult } from "../utils/types";
-import z from "zod";
+import z from "zod/v4";
 import { zfd } from "zod-form-data";
 import { formatZodErrors } from "../utils/formatZodErrors.server";
 
 export const loginSchema = zfd.formData({
-  email: zfd.text(z.string().email()),
+  email: zfd.text(z.email()),
   password: zfd.text(),
   redirectTo: zfd.text(z.string().optional()),
   rememberMe: zfd.checkbox().optional(),

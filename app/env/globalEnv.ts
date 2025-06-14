@@ -1,4 +1,4 @@
-import z from "zod";
+import z from "zod/v4";
 import { generateErrorMessage } from "zod-error";
 
 export const globalEnvSchema = z.object({
@@ -15,10 +15,11 @@ export type GlobalEnv = z.infer<typeof globalEnvSchema>;
 function buildEnv(): GlobalEnv {
   try {
     return globalEnvSchema.parse(process.env);
-  } catch (error: unknown) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
     console.error("Warning: invalid client env vars!");
     console.error(
-      generateErrorMessage((error as z.ZodError).issues, {
+      generateErrorMessage(error.issues, {
         delimiter: { error: "\n" },
       }),
     );

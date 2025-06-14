@@ -1,13 +1,13 @@
 import { User } from "@prisma/client";
 import { zfd } from "zod-form-data";
-import { z } from "zod";
+import { z } from "zod/v4";
 import { encryptPassword, verifyPassword } from "./users/passwordUtils.server";
 import prisma from "./utils/prisma.server";
 import { DataResult } from "./utils/types";
 import { formatZodErrors } from "./utils/formatZodErrors.server";
 
 export const createUserParams = zfd.formData({
-  email: zfd.text(z.string().email()),
+  email: zfd.text(z.email()),
   name: zfd.text(),
   password: zfd.text(),
   passwordConfirmation: zfd.text(),
@@ -59,7 +59,7 @@ export async function createUser(
 }
 
 const updateUserParams = zfd.formData({
-  email: zfd.text(z.string().email().optional()),
+  email: zfd.text(z.email().optional()),
   name: zfd.text(z.string().optional()),
   currentPassword: zfd.text(),
   newPassword: zfd.text(z.string().optional()),
