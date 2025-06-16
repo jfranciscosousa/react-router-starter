@@ -4,7 +4,7 @@
 #
 
 app = "react-router-prisma-starter"
-primary_region = "mad"
+primary_region = "ams"
 kill_signal = "SIGINT"
 kill_timeout = "5s"
 
@@ -17,7 +17,7 @@ kill_timeout = "5s"
 [env]
   METRICS_PORT = "8081"
   PORT = "8080"
-  PRIMARY_REGION = "mad"
+  PRIMARY_REGION = "ams"
   SECURE_AUTH_COOKIE= "true"
   NODE_ENV = "production"
 
