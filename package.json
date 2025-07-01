@@ -59,7 +59,7 @@
     "@eslint/js": "^9.29.0",
     "@faker-js/faker": "^9.8.0",
     "@playwright-testing-library/test": "^4.5.0",
-    "@playwright/test": "^1.53.0",
+    "@playwright/test": "^1.53.2",
     "@react-router/dev": "^7.6.2",
     "@react-router/fs-routes": "^7.6.2",
     "@tailwindcss/vite": "^4.1.10",
