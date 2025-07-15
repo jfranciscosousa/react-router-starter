@@ -104,6 +104,8 @@ function Document({
       <html
         className={cn(className, "bg-background text-foreground")}
         lang="en"
+        // Suppress warnings from light/dark theme script
+        suppressHydrationWarning
       >
         <head>
           <meta charSet="utf-8" />
