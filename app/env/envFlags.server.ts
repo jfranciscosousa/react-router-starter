@@ -2,7 +2,7 @@ import z from "zod/v4";
 import { generateErrorMessage } from "zod-error";
 
 export const serverEnvSchema = z.object({
-  DATABASE_PRISMA_URL: z.string(),
+  DATABASE_URL: z.string(),
   SECURE_AUTH_COOKIE: z.enum(["true", "false"]).transform((v) => v === "true"),
   NODE_ENV: z.enum(["development", "test", "production"]),
   SECRET_KEY_BASE: z.string(),

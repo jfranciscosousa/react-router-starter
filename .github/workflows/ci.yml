@@ -77,7 +77,7 @@ jobs:
           pnpm test:e2e
         env:
           SECRET_KEY_BASE: supersecret42069
-          DATABASE_PRISMA_URL: postgres://postgres:postgres@localhost:5432/react-router-prisma-starter-test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/react-router-prisma-starter-test
           SECURE_AUTH_COOKIE: false
           NODE_ENV: production
           PORT: 3001
