@@ -16,6 +16,11 @@ kill_timeout = "5s"
   strategy = "bluegreen"
   release_command = "npx prisma db push --skip-generate"
 
+[deploy.release_command_machine]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
+
 [env]
   METRICS_PORT = "8081"
   PORT = "8080"
