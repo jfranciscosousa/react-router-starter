@@ -61,6 +61,7 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm i
+          npx playwright install-deps
           npx playwright install
 
       - name: Lint
