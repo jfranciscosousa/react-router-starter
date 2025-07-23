@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf .eslintcache playwright-report build public/build .cache node_modules test-results",
-    "start": "react-router-serve ./build/server/index.js",
+    "start": "react-router-serve build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
     "build": "react-router build",
     "build-prod": "prisma db push && react-router build",
     "dev": "react-router dev",
