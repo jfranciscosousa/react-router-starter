@@ -12,5 +12,4 @@ mkswap /swapfile
 echo 10 > /proc/sys/vm/swappiness
 swapon /swapfile
 
-pnpm prisma db push --skip-generate
 pnpm run start
