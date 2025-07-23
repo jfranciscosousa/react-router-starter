@@ -16,7 +16,7 @@ kill_timeout = "5s"
 
 [deploy]
   strategy = "bluegreen"
-  release_command = "pnpm dlx prisma db push --skip-generate"
+  release_command = "npx prisma db push --skip-generate"
 
 [env]
   METRICS_PORT = "8081"
