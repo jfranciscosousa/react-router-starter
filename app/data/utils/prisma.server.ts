@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Prisma from "@prisma/client/edge";
+import Prisma from "@prisma/client";
 
 import { SERVER_ENV } from "~/env/envFlags.server";
 import { UserFeatureFlagsSchema } from "../../env/userFeatureFlags.server";

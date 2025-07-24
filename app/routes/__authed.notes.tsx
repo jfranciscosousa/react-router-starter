@@ -14,8 +14,6 @@ import NotesView from "~/modules/Notes/NotesView";
 import { userIdFromRequest } from "~/web/auth.server";
 import { Route } from "./+types/__authed.notes";
 
-export const config = { runtime: "edge" };
-
 export type NotesRouteData = Route.ComponentProps["loaderData"];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {

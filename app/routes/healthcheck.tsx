@@ -2,8 +2,6 @@
 import { LoaderFunctionArgs } from "react-router";
 import prisma from "~/data/utils/prisma.server";
 
-export const config = { runtime: "edge" };
-
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const host =
     request.headers.get("X-Forwarded-Host") ?? request.headers.get("host");

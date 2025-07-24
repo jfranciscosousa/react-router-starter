@@ -3,8 +3,6 @@ import { createUser } from "~/data/users.server";
 import SignUp from "~/modules/Auth/SignUp";
 import { authenticate } from "~/web/auth.server";
 
-export const config = { runtime: "edge" };
-
 export const action = async ({ request }: ActionFunctionArgs) => {
   const form = await request.formData();
   const result = await createUser(form);

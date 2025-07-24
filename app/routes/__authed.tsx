@@ -4,8 +4,6 @@ import LoggedInLayout from "~/components/layouts/LoggedInLayout";
 import { userFromRequest } from "~/web/auth.server";
 import { Route } from "./+types/__authed";
 
-export const config = { runtime: "edge" };
-
 export type AuthedRouteData = Route.ComponentProps["loaderData"];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
