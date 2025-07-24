@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { waitFor } from "@playwright-testing-library/test";
 import { expect } from "@playwright/test";
-import { verifyPassword } from "~/data/users/passwordUtils.server";
+import { verifyPassword } from "~/data/users/passwords";
 import prisma from "~/data/utils/prisma.server";
 import { createUserAndLogin, test, USER_TEST_PASSWORD } from "./utils";
 

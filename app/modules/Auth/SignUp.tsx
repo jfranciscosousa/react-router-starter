@@ -20,20 +20,20 @@ export default function SignUp() {
         <CardTitle className="mb-8">Please sign up</CardTitle>
 
         <InputField
-          label="Email"
-          name="email"
-          type="text"
-          required
-          placeholder="hello@email.com"
-          errors={errors}
-        />
-
-        <InputField
           label="Name"
           name="name"
           type="text"
           required
           placeholder="How you would like to be called"
+          errors={errors}
+        />
+
+        <InputField
+          label="Email"
+          name="email"
+          type="text"
+          required
+          placeholder="hello@email.com"
           errors={errors}
         />
 

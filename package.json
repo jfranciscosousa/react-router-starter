@@ -38,7 +38,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "@vercel/react-router": "^1.2.2",
     "accept-language-parser": "^1.5.0",
-    "argon2": "^0.43.1",
+    "bcrypt-ts": "^7.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
@@ -52,7 +52,7 @@
     "react-router": "^7.7.0",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^4.0.5",
+    "zod": "^4.0.8",
     "zod-error": "^1.5.0",
     "zod-form-data": "^3.0.0"
   },
@@ -97,7 +97,8 @@
     "tailwindcss": "^4.1.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
-    "vite": "^7.0.5",
+    "vite": "^7.0.6",
+    "vite-plugin-checker": "^0.10.1",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
   },

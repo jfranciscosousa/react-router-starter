@@ -26,22 +26,22 @@ export default function ProfileView() {
         <CardTitle className="mb-8">Edit your profile</CardTitle>
 
         <InputField
-          label="Email"
-          name="email"
-          type="text"
-          required
-          placeholder="hello@email.com"
-          defaultValue={user.email}
-          errors={actionData?.errors}
-        />
-
-        <InputField
           label="Name"
           name="name"
           type="text"
           required
           placeholder="How you would like to be called"
           defaultValue={user.name}
+          errors={actionData?.errors}
+        />
+
+        <InputField
+          label="Email"
+          name="email"
+          type="text"
+          required
+          placeholder="hello@email.com"
+          defaultValue={user.email}
           errors={actionData?.errors}
         />
 
