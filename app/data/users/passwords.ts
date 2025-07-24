@@ -1,12 +1,12 @@
-import { hash, compare, genSalt } from "bcrypt-ts";
+import argon from "argon2";
 
 export async function encryptPassword(password: string): Promise<string> {
-  return hash(password, await genSalt(12));
+  return argon.hash(password);
 }
 
 export async function verifyPassword(
   hash: string,
   password: string,
 ): Promise<boolean> {
-  return compare(password, hash);
+  return argon.verify(hash, password);
 }

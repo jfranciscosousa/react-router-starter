@@ -38,7 +38,7 @@
     "@uidotdev/usehooks": "^2.4.1",
     "@vercel/react-router": "^1.2.2",
     "accept-language-parser": "^1.5.0",
-    "bcrypt-ts": "^7.1.0",
+    "argon2": "^0.43.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
