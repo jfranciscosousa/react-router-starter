@@ -1,17 +1,14 @@
 #!/bin/sh
 
 # TypeScript type checking script
-# This script generates Prisma client, React Router types, and runs TypeScript compiler
+# This script generates React Router types and runs TypeScript compiler
 
 set -e  # Exit on error
 
 # Load environment variables
-. bin/load-env
+. bin/load-env .env
 
 echo "🔍 Running TypeScript type checking..."
-
-echo "🔄 Generating Prisma client..."
-pnpm prisma generate
 
 echo "🔄 Generating React Router types..."
 pnpm react-router typegen

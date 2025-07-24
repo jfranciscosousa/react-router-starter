@@ -1,28 +1,36 @@
-import { Note } from "@prisma/client";
-import prisma from "./utils/prisma.server";
+import { eq, and, asc } from "drizzle-orm";
+import db from "./utils/drizzle.server";
+import { notes, Note } from "./schema";
 
 export async function listNotes(userId: string): Promise<Note[]> {
   if (!userId) return [];
 
-  return prisma.note.findMany({
-    where: { userId },
-    orderBy: { createdAt: "asc" },
-  });
+  return db
+    .select()
+    .from(notes)
+    .where(eq(notes.userId, userId))
+    .orderBy(asc(notes.createdAt));
 }
 
 export async function deleteNote(userId: string, id: string): Promise<void> {
-  await prisma.note.deleteMany({ where: { id, userId: userId } });
+  await db.delete(notes).where(and(eq(notes.id, id), eq(notes.userId, userId)));
 }
 
 export async function deleteAllNotes(userId: string): Promise<void> {
-  await prisma.note.deleteMany({ where: { userId: userId } });
+  await db.delete(notes).where(eq(notes.userId, userId));
 }
 
 export async function createNote(
   userId: string,
   noteParams: { content: string },
 ) {
-  return prisma.note.create({
-    data: { ...noteParams, user: { connect: { id: userId } } },
-  });
+  const [newNote] = await db
+    .insert(notes)
+    .values({
+      content: noteParams.content,
+      userId,
+    })
+    .returning();
+
+  return newNote;
 }

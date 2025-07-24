@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npm run typecheck:*)",
-      "Bash(npm run ts-check:*)"
+      "Bash(npm run ts-check:*)",
+      "WebFetch(domain:orm.drizzle.team)",
+      "Bash(pnpm add:*)"
     ],
     "deny": []
   }

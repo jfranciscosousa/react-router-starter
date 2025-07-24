@@ -6,11 +6,11 @@
 set -e  # Exit on error
 
 # Load test environment variables (automatically uses .env.test)
-. bin/load-env
+. bin/load-env .env.test
 
 echo "🎭 Building end-to-end test dependencies"
 
-pnpm prisma db push -- --force
+pnpm drizzle-kit push --force
 
 pnpm react-router build
 

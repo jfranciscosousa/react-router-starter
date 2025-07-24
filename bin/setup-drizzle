@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Drizzle setup utility
+# This script generates the Drizzle schema and applies migrations
+
+set -e  # Exit on error
+
+# Load environment variables
+. bin/load-env .env
+
+echo "🔄 Setting up Drizzle ORM..."
+
+echo "📊 Pushing schema to database..."
+pnpm drizzle-kit push
+
+echo "✅ Drizzle setup completed successfully!"

@@ -1,23 +1,20 @@
 #!/bin/sh
 
 # Deployment script
-# This script validates configuration, generates Prisma client, pushes database, and builds
+# This script validates configuration, pushes database schema with Drizzle, and builds
 
 set -e  # Exit on error
 
 # Load environment variables
-. bin/load-env
+. bin/load-env .env
 
 echo "🚀 Starting deployment process..."
 
 echo "✅ Validating configuration..."
 pnpm tsx tasks/validateConfig.ts
 
-echo "🔄 Generating Prisma client..."
-pnpm prisma generate
-
-echo "📊 Pushing database schema..."
-pnpm prisma db push
+echo "📊 Setting up database schema with Drizzle..."
+pnpm drizzle-kit migrate
 
 echo "🔨 Building application..."
 bin/build

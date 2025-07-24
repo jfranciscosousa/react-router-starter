@@ -35,8 +35,9 @@ cat << 'EOF'
   ./bin/ci           Run full CI pipeline (lint, type-check, test)
 
 🔧 Utilities:
-  ./bin/dotenv       Advanced dotenv utility for loading .env files
-  ./bin/load-env     Centralized environment loading (used by other scripts)
+  ./bin/dotenv        Advanced dotenv utility for loading .env files
+  ./bin/load-env      Centralized environment loading (used by other scripts)
+  ./bin/setup-drizzle Setup Drizzle database schema
 
 🌍 Environment Handling:
   • Regular scripts automatically load .env

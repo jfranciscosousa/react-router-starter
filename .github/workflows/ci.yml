@@ -11,7 +11,7 @@ jobs:
       postgres:
         image: postgres:17-alpine
         env:
-          POSTGRES_DB: react-router-prisma-starter-test
+          POSTGRES_DB: react-router-starter-test
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
@@ -76,7 +76,7 @@ jobs:
           bin/test-e2e
         env:
           SECRET_KEY_BASE: supersecret42069
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/react-router-prisma-starter-test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/react-router-starter-test
           SECURE_AUTH_COOKIE: false
           NODE_ENV: production
           PORT: 3001

@@ -1,5 +1,7 @@
 import { createCookie, redirect } from "react-router";
-import prisma from "~/data/utils/prisma.server";
+import { eq } from "drizzle-orm";
+import db, { parseFeatureFlags } from "~/data/utils/drizzle.server";
+import { users } from "~/data/schema";
 import { SERVER_ENV } from "~/env/envFlags.server";
 
 const authCookie = createCookie("auth", {
@@ -51,17 +53,23 @@ export async function userFromRequest(request: Request) {
 
   if (!userId) return null;
 
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      createdAt: true,
-      updatedAt: true,
-      featureFlags: true,
-    },
-  });
+  const [user] = await db
+    .select({
+      id: users.id,
+      email: users.email,
+      name: users.name,
+      createdAt: users.createdAt,
+      updatedAt: users.updatedAt,
+      featureFlags: users.featureFlags,
+    })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
 
-  return user;
+  if (!user) return null;
+
+  return {
+    ...user,
+    featureFlags: parseFeatureFlags(user.featureFlags),
+  };
 }

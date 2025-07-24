@@ -1,5 +1,6 @@
-import { User } from "@prisma/client";
-import prisma from "../utils/prisma.server";
+import { eq } from "drizzle-orm";
+import db, { parseFeatureFlags } from "../utils/drizzle.server";
+import { users, User } from "../schema";
 import { verifyPassword } from "./passwords";
 import { DataResult } from "../utils/types";
 import z from "zod/v4";
@@ -17,7 +18,11 @@ export type LoginParams = z.infer<typeof loginSchema> | FormData;
 
 export async function login(
   params: LoginParams,
-): Promise<DataResult<User & { rememberMe?: boolean; redirectTo?: string }>> {
+): Promise<
+  DataResult<
+    Omit<User, "password"> & { rememberMe?: boolean; redirectTo?: string }
+  >
+> {
   const parsedSchema = loginSchema.safeParse(params);
 
   if (!parsedSchema.success)
@@ -25,15 +30,29 @@ export async function login(
 
   const { email, password, rememberMe, redirectTo } = parsedSchema.data;
 
-  const user = await prisma.user.findUnique({ where: { email } });
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
 
   if (!user)
     return { data: null, errors: { email: "Email/Password combo not found" } };
 
   if (await verifyPassword(user.password, password)) {
-    user.password = "";
+    const userWithoutPassword = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+      featureFlags: parseFeatureFlags(user.featureFlags),
+    };
 
-    return { data: { ...user, rememberMe, redirectTo }, errors: null };
+    return {
+      data: { ...userWithoutPassword, rememberMe, redirectTo },
+      errors: null,
+    };
   }
 
   return { data: null, errors: { email: "Email/Password combo not found" } };

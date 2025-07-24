@@ -1,10 +1,10 @@
-# React Router 7 + Prisma Starter
+# React Router 7 + Drizzle Starter
 
-A modern, production-ready full-stack web application starter built with **React Router 7**, **Prisma**, and **PostgreSQL**. Features authentication, internationalization, theming, and comprehensive tooling.
+A modern, production-ready full-stack web application starter built with **React Router 7**, **Drizzle ORM**, and **PostgreSQL**. Features authentication, internationalization, theming, and comprehensive tooling.
 
 ## 🚀 Live Demo
 
-- [Deployed Application](https://react-router-prisma-starter.fly.dev/)
+- [Deployed Application](https://react-router-starter.fly.dev/)
 - [React Router 7 Documentation](https://reactrouter.com/home)
 
 ## ✨ Features
@@ -18,7 +18,7 @@ A modern, production-ready full-stack web application starter built with **React
 
 ### Technical Stack
 - **⚡ React Router 7** - Latest routing and SSR capabilities
-- **🗄️ Prisma + PostgreSQL** - Type-safe database ORM with migrations
+- **🗄️ Drizzle ORM + PostgreSQL** - Type-safe database ORM with SQL-like queries
 - **🎨 Tailwind CSS + shadcn/ui** - Modern styling with beautiful components
 - **🔒 Security** - Argon2 password hashing, secure cookies, CSRF protection
 - **📱 Responsive Design** - Mobile-first approach with modern UI patterns
@@ -39,6 +39,7 @@ A modern, production-ready full-stack web application starter built with **React
 │   │   ├── layouts/        # Layout components
 │   │   └── ui/             # shadcn/ui components (React 19 compatible)
 │   ├── data/               # Data access layer
+│   │   ├── schema.ts       # Drizzle database schema
 │   │   ├── users.server.ts # User operations
 │   │   ├── notes.server.ts # Notes operations
 │   │   └── utils/          # Database utilities
@@ -51,7 +52,7 @@ A modern, production-ready full-stack web application starter built with **React
 │   ├── env/                # Environment configuration
 │   └── web/                # Server-side utilities
 ├── bin/                    # Development scripts
-├── prisma/                 # Database schema and migrations
+├── drizzle/                # Database migrations (generated)
 ├── tests/                  # E2E and unit tests
 └── public/                 # Static assets
 ```
@@ -73,7 +74,7 @@ A modern, production-ready full-stack web application starter built with **React
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd remix-prisma-starter
+   cd react-router-starter
    ```
 
 2. **Install dependencies**
@@ -89,7 +90,7 @@ A modern, production-ready full-stack web application starter built with **React
 
 4. **Initialize database**
    ```bash
-   ./bin/setup-db  # Creates database and runs migrations
+   ./bin/setup-drizzle  # Sets up database schema with Drizzle
    ```
 
 5. **Start development**
@@ -158,12 +159,12 @@ Environment variables are loaded once per script execution to prevent conflicts 
 
 ```bash
 # Database setup and migrations
-pnpm prisma generate    # Generate Prisma client
-pnpm prisma db push     # Push schema changes
-pnpm prisma studio      # Open database browser
+pnpm drizzle-kit push       # Push schema changes
+pnpm drizzle-kit generate   # Generate migration files
+pnpm drizzle-kit studio     # Open database browser
 
 # Using bin scripts (includes environment loading)
-./bin/setup-db         # Full database initialization
+./bin/setup-drizzle    # Full database initialization
 ```
 
 ## 🧪 Testing
@@ -261,6 +262,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## 🙏 Acknowledgments
 
 - [React Router](https://reactrouter.com/) - Modern React framework
-- [Prisma](https://prisma.io/) - Next-generation ORM
+- [Drizzle ORM](https://orm.drizzle.team/) - Type-safe database ORM
 - [shadcn/ui](https://ui.shadcn.com/) - Beautiful, accessible components
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework

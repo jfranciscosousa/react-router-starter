@@ -6,11 +6,11 @@
 set -e  # Exit on error
 
 # Load environment variables (test script - uses .env.test)
-. bin/load-env
+. bin/load-env .env.test
 
 echo "🧪 Running unit tests with Vitest..."
 
 # Run Vitest in run mode (non-watch)
-pnpm vitest --run
+NODE_ENV=development pnpm vitest --run
 
 echo "✅ Unit tests completed successfully!"

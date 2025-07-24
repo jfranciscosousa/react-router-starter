@@ -1,8 +1,9 @@
 #!/bin/sh
 
 # Environment loading utility - prevents duplicate loading
-# Usage: . bin/load-env [env-file]
-# Default: loads .env for regular scripts, .env.test for test scripts
+# Usage: . bin/load-env <env-file>
+# Example: . bin/load-env .env
+# Example: . bin/load-env .env.test
 
 # Check if environment is already loaded to prevent conflicts
 if [ -n "${ENV_LOADED:-}" ]; then
@@ -10,15 +11,7 @@ if [ -n "${ENV_LOADED:-}" ]; then
     return 0 2>/dev/null || exit 0
 fi
 
-# Determine which env file to use
-ENV_FILE="${1:-.env}"
-
-# Special handling for test scripts - use .env.test by default
-case "$(basename "${0}")" in
-    test-*)
-        ENV_FILE="${1:-.env.test}"
-        ;;
-esac
+ENV_FILE="$1"
 
 # Load environment if file exists
 if [ -f "$ENV_FILE" ]; then

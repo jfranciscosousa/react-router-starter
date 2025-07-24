@@ -1,24 +1,30 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Pool } from "pg";
 
 // This only works for postgres!
 export async function truncateAll() {
-  const client = new PrismaClient();
-  const tables = getTables();
-  const commands = tables.map((table) => truncateTable(client, table));
-
-  await Promise.all(commands);
-
-  await client.$disconnect();
-}
-
-export function truncateTable(client: PrismaClient, table: string) {
-  return client.$executeRawUnsafe(
-    `TRUNCATE TABLE "${table}" RESTART IDENTITY CASCADE`,
-  );
-}
-
-function getTables() {
-  return Prisma.dmmf.datamodel.models.map((model) => {
-    return model.dbName || model.name;
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
   });
+
+  const tables = ["User", "Note"]; // Explicitly list table names from our schema
+
+  try {
+    for (const table of tables) {
+      await pool.query(`TRUNCATE TABLE "${table}" RESTART IDENTITY CASCADE`);
+    }
+  } finally {
+    await pool.end();
+  }
+}
+
+export async function truncateTable(tableName: string) {
+  const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+  });
+
+  try {
+    await pool.query(`TRUNCATE TABLE "${tableName}" RESTART IDENTITY CASCADE`);
+  } finally {
+    await pool.end();
+  }
 }

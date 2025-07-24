@@ -2,7 +2,9 @@ import { faker } from "@faker-js/faker";
 import { waitFor } from "@playwright-testing-library/test";
 import { expect } from "@playwright/test";
 import { verifyPassword } from "~/data/users/passwords";
-import prisma from "~/data/utils/prisma.server";
+import { db } from "~/data/utils/drizzle.server";
+import { users } from "~/data/schema";
+import { eq } from "drizzle-orm";
 import { createUserAndLogin, test, USER_TEST_PASSWORD } from "./utils";
 
 function assertUserSame(user1: object, user2: object) {
@@ -45,9 +47,11 @@ test("updates profile", async ({ page, screen }) => {
   await waitFor(async () => {
     expect(await page.getByText(user.name).count()).toBe(0);
 
-    const updatedUser = await prisma.user.findFirstOrThrow({
-      where: { id: user.id },
-    });
+    const updatedUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, user.id))
+      .then((rows) => rows[0]);
     expect(await page.getByText(updatedUser.name).count()).toBe(1);
     expect(updatedUser.name).toEqual(newName);
     expect(updatedUser.email).toEqual(newEmail);
@@ -74,9 +78,11 @@ test("does not update profile if password confirmation does not match", async ({
   await waitFor(async () => {
     expect(await page.getByText("Passwords do not match").count()).toBe(1);
 
-    const updatedUser = await prisma.user.findFirstOrThrow({
-      where: { email: user.email },
-    });
+    const updatedUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, user.email))
+      .then((rows) => rows[0]);
     assertUserSame(updatedUser, user);
     // Check that the old password is still valid
     expect(
@@ -97,9 +103,11 @@ test("does not update profile if password is bad", async ({ page, screen }) => {
   await waitFor(async () => {
     expect(await page.getByText("Wrong password").count()).toBe(1);
 
-    const updatedUser = await prisma.user.findFirstOrThrow({
-      where: { email: user.email },
-    });
+    const updatedUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, user.email))
+      .then((rows) => rows[0]);
     assertUserSame(updatedUser, user);
   });
 });

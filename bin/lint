@@ -6,7 +6,7 @@
 set -e  # Exit on error
 
 # Load environment variables
-. bin/load-env
+. bin/load-env .env
 
 echo "🔍 Running ESLint..."
 

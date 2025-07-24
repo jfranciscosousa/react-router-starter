@@ -6,7 +6,7 @@
 set -e  # Exit on error
 
 # Load environment variables (test script - uses .env.test)
-. bin/load-env
+. bin/load-env .env.test
 
 echo "🧪 Running all tests..."
 

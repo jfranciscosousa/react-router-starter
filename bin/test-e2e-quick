@@ -6,7 +6,7 @@
 set -e  # Exit on error
 
 # Load test environment variables (automatically uses .env.test)
-. bin/load-env
+. bin/load-env .env.test
 
 echo "🎭 Running end-to-end tests (quick mode)..."
 

@@ -5,8 +5,7 @@
 
 set -e  # Exit on error
 
-# Load environment variables
-. bin/load-env
+# Do not load env vars on this script
 
 echo "✅ Validating environment configuration..."
 

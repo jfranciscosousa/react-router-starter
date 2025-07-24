@@ -1,8 +1,10 @@
-import { User } from "@prisma/client";
 import { zfd } from "zod-form-data";
 import { z } from "zod/v4";
+import { eq } from "drizzle-orm";
 import { encryptPassword, verifyPassword } from "./users/passwords";
-import prisma from "./utils/prisma.server";
+import db from "./utils/drizzle.server";
+import { parseFeatureFlags } from "./utils/drizzle.server";
+import { users, notes, User } from "./schema";
 import { DataResult } from "./utils/types";
 import { formatZodErrors } from "./utils/formatZodErrors.server";
 
@@ -19,11 +21,26 @@ export type CreateUserParams = z.infer<typeof createUserParams> | FormData;
 export async function findUserByEmail(
   email: string,
 ): Promise<Omit<User, "password"> | null> {
-  const user = await prisma.user.findUnique({ where: { email } });
+  const [user] = await db
+    .select({
+      id: users.id,
+      email: users.email,
+      name: users.name,
+      createdAt: users.createdAt,
+      updatedAt: users.updatedAt,
+      featureFlags: users.featureFlags,
+    })
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
 
-  if (user) user.password = "";
+  if (!user) return null;
 
-  return user;
+  // Parse feature flags using the helper function
+  return {
+    ...user,
+    featureFlags: parseFeatureFlags(user.featureFlags),
+  };
 }
 
 export async function createUser(
@@ -49,13 +66,31 @@ export async function createUser(
   }
 
   const encryptedPassword = await encryptPassword(password);
-  const user = await prisma.user.create({
-    data: { email, name, password: encryptedPassword },
-  });
+  const [user] = await db
+    .insert(users)
+    .values({
+      email,
+      name,
+      password: encryptedPassword,
+      featureFlags: {},
+    })
+    .returning({
+      id: users.id,
+      email: users.email,
+      name: users.name,
+      createdAt: users.createdAt,
+      updatedAt: users.updatedAt,
+      featureFlags: users.featureFlags,
+    });
 
-  user.password = "";
-
-  return { data: { ...user, rememberMe }, errors: null };
+  return {
+    data: {
+      ...user,
+      featureFlags: parseFeatureFlags(user.featureFlags),
+      rememberMe,
+    },
+    errors: null,
+  };
 }
 
 const updateUserParams = zfd.formData({
@@ -87,7 +122,11 @@ export async function updateUser(
     };
   }
 
-  const user = await prisma.user.findUnique({ where: { id: userId } });
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1);
 
   if (!user) return { data: null, errors: { userid: "User not found!" } };
 
@@ -98,23 +137,58 @@ export async function updateUser(
   const encryptedPassword = newPassword
     ? await encryptPassword(newPassword)
     : undefined;
-  const updatedUser = await prisma.user.update({
-    where: { id: user.id },
-    data: { email, name, password: encryptedPassword },
-  });
 
-  if (updatedUser) updatedUser.password = "";
+  const updateData: Partial<typeof users.$inferInsert> = {};
+  if (email) updateData.email = email;
+  if (name) updateData.name = name;
+  if (encryptedPassword) updateData.password = encryptedPassword;
+  updateData.updatedAt = new Date();
 
-  return { data: updatedUser, errors: null };
+  const [updatedUser] = await db
+    .update(users)
+    .set(updateData)
+    .where(eq(users.id, user.id))
+    .returning({
+      id: users.id,
+      email: users.email,
+      name: users.name,
+      createdAt: users.createdAt,
+      updatedAt: users.updatedAt,
+      featureFlags: users.featureFlags,
+    });
+
+  return {
+    data: {
+      ...updatedUser,
+      featureFlags: parseFeatureFlags(updatedUser.featureFlags),
+    },
+    errors: null,
+  };
 }
 
 export async function deleteUser(user: User): Promise<Omit<User, "password">> {
-  const [_, deletedUser] = await prisma.$transaction([
-    prisma.note.deleteMany({ where: { userId: user.id } }),
-    prisma.user.delete({ where: { id: user.id } }),
-  ]);
+  const deletedUser = await db.transaction(async (tx) => {
+    // Delete all notes for the user first
+    await tx.delete(notes).where(eq(notes.userId, user.id));
 
-  if (deletedUser) deletedUser.password = "";
+    // Delete the user and return the deleted user data
+    const [deleted] = await tx
+      .delete(users)
+      .where(eq(users.id, user.id))
+      .returning({
+        id: users.id,
+        email: users.email,
+        name: users.name,
+        createdAt: users.createdAt,
+        updatedAt: users.updatedAt,
+        featureFlags: users.featureFlags,
+      });
 
-  return deletedUser;
+    return deleted;
+  });
+
+  return {
+    ...deletedUser,
+    featureFlags: parseFeatureFlags(deletedUser.featureFlags),
+  };
 }
