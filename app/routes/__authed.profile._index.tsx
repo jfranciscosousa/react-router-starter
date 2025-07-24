@@ -1,14 +1,24 @@
-import { Form, useActionData } from "react-router";
 import { useEffect } from "react";
+import { ActionFunctionArgs, Form, useActionData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Card, CardTitle } from "~/components/ui/card";
 import { InputField } from "~/components/ui/input-field";
 import { useToast } from "~/components/ui/use-toast";
+import { userIdFromRequest } from "~/data/sessions.server";
+import { updateUser } from "~/data/users.server";
 import useIsLoading from "~/hooks/useIsLoading";
 import useUser from "~/hooks/useUser";
-import { ProfileRouteAction } from "~/routes/__authed.profile";
 
-export default function ProfileView() {
+export type ProfileRouteAction = typeof action;
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const userId = await userIdFromRequest(request, "loggedIn");
+  const form = await request.formData();
+
+  return await updateUser(userId, form, request);
+};
+
+export default function ProfileTab() {
   const user = useUser();
   const actionData = useActionData<ProfileRouteAction>();
   const { toast } = useToast();
@@ -71,7 +81,12 @@ export default function ProfileView() {
           className="pb-4"
         />
 
-        <Button type="submit" isLoading={isLoading}>
+        <Button
+          type="submit"
+          isLoading={isLoading}
+          name="_action"
+          value="update-profile"
+        >
           Update profile
         </Button>
       </Form>

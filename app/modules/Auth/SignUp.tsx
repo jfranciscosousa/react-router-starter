@@ -1,7 +1,6 @@
 import { Form, Link, useActionData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Card, CardTitle } from "~/components/ui/card";
-import { CheckboxField } from "~/components/ui/checkbox-field";
 import { InputField } from "~/components/ui/input-field";
 import { GenericDataError } from "~/data/utils/types";
 import useIsLoading from "~/hooks/useIsLoading";
@@ -54,8 +53,6 @@ export default function SignUp() {
           required
           errors={errors}
         />
-
-        <CheckboxField name="rememberMe" label="Remember me" className="pb-4" />
 
         <Button type="submit" className="mt-8" isLoading={isLoading}>
           Sign up

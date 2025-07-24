@@ -8,6 +8,13 @@
       "when": 1753370198728,
       "tag": "0000_wet_speed_demon",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1753376418390,
+      "tag": "0001_special_leo",
+      "breakpoints": true
     }
   ]
 }

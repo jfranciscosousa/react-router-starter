@@ -3,9 +3,9 @@ import type {
   LoaderFunctionArgs,
   MetaFunction,
 } from "react-router";
-import { login } from "~/data/users/login.server";
+import { login } from "~/data/login.server";
 import Login from "~/modules/Auth/Login";
-import { authenticate } from "~/web/auth.server";
+import { authenticate } from "~/data/sessions.server";
 import { Route } from "./+types/__unauthed.login";
 
 export type LoginRouteLoader = Route.ComponentProps["loaderData"];
@@ -23,9 +23,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   if (result.errors) return { errors: result.errors, original };
 
-  return authenticate(result.data, {
+  return authenticate(request, result.data, {
     redirectTo: result.data.redirectTo,
-    rememberMe: result.data.rememberMe,
   }) as never;
 };
 

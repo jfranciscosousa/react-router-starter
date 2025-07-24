@@ -1,34 +1,29 @@
 import { eq } from "drizzle-orm";
-import db, { parseFeatureFlags } from "../utils/drizzle.server";
-import { users, User } from "../schema";
+import db, { parseFeatureFlags } from "./utils/drizzle.server";
+import { users, User } from "./schema";
 import { verifyPassword } from "./passwords";
-import { DataResult } from "../utils/types";
+import { DataResult } from "./utils/types";
 import z from "zod/v4";
 import { zfd } from "zod-form-data";
-import { formatZodErrors } from "../utils/formatZodErrors.server";
+import { formatZodErrors } from "./utils/formatZodErrors.server";
 
 export const loginSchema = zfd.formData({
   email: zfd.text(z.email()),
   password: zfd.text(),
   redirectTo: zfd.text(z.string().optional()),
-  rememberMe: zfd.checkbox().optional(),
 });
 
 export type LoginParams = z.infer<typeof loginSchema> | FormData;
 
 export async function login(
   params: LoginParams,
-): Promise<
-  DataResult<
-    Omit<User, "password"> & { rememberMe?: boolean; redirectTo?: string }
-  >
-> {
+): Promise<DataResult<Omit<User, "password"> & { redirectTo?: string }>> {
   const parsedSchema = loginSchema.safeParse(params);
 
   if (!parsedSchema.success)
     return { data: null, errors: formatZodErrors(parsedSchema.error) };
 
-  const { email, password, rememberMe, redirectTo } = parsedSchema.data;
+  const { email, password, redirectTo } = parsedSchema.data;
 
   const [user] = await db
     .select()
@@ -50,7 +45,7 @@ export async function login(
     };
 
     return {
-      data: { ...userWithoutPassword, rememberMe, redirectTo },
+      data: { ...userWithoutPassword, redirectTo },
       errors: null,
     };
   }

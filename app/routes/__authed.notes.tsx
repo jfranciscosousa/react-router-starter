@@ -11,20 +11,20 @@ import {
   listNotes,
 } from "~/data/notes.server";
 import NotesView from "~/modules/Notes/NotesView";
-import { userIdFromRequest } from "~/web/auth.server";
+import { userIdFromRequest } from "~/data/sessions.server";
 import { Route } from "./+types/__authed.notes";
 
 export type NotesRouteData = Route.ComponentProps["loaderData"];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const userId = await userIdFromRequest(request);
+  const userId = await userIdFromRequest(request, "loggedIn");
   const notes = await listNotes(userId);
 
   return { notes };
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const userId = await userIdFromRequest(request);
+  const userId = await userIdFromRequest(request, "loggedIn");
   const form = Object.fromEntries(await request.formData());
 
   switch (form._action) {

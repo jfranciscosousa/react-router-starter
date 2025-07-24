@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, Outlet, redirect } from "react-router";
 import ErrorPage from "~/components/Error500Page";
 import LoggedInLayout from "~/components/layouts/LoggedInLayout";
-import { userFromRequest } from "~/web/auth.server";
+import { userFromRequest } from "~/data/sessions.server";
 import { Route } from "./+types/__authed";
 
 export type AuthedRouteData = Route.ComponentProps["loaderData"];

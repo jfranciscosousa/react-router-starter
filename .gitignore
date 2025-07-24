@@ -10,6 +10,7 @@ test-results/
 playwright-report/
 .eslintcache
 .react-router/
+.vercel/
 
 !.env.sample
 !.env.*.sample

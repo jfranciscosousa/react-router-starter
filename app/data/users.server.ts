@@ -1,19 +1,22 @@
 import { zfd } from "zod-form-data";
 import { z } from "zod/v4";
 import { eq } from "drizzle-orm";
-import { encryptPassword, verifyPassword } from "./users/passwords";
+import { encryptPassword, verifyPassword } from "./passwords";
 import db from "./utils/drizzle.server";
 import { parseFeatureFlags } from "./utils/drizzle.server";
 import { users, notes, User } from "./schema";
 import { DataResult } from "./utils/types";
 import { formatZodErrors } from "./utils/formatZodErrors.server";
+import {
+  deleteAllOtherSessions,
+  sessionIdFromRequest,
+} from "./sessions.server";
 
 export const createUserParams = zfd.formData({
   email: zfd.text(z.email()),
   name: zfd.text(),
   password: zfd.text(),
   passwordConfirmation: zfd.text(),
-  rememberMe: zfd.checkbox().optional(),
 });
 
 export type CreateUserParams = z.infer<typeof createUserParams> | FormData;
@@ -45,14 +48,13 @@ export async function findUserByEmail(
 
 export async function createUser(
   params: CreateUserParams,
-): Promise<DataResult<Omit<User, "password"> & { rememberMe?: boolean }>> {
+): Promise<DataResult<Omit<User, "password">>> {
   const parsedSchema = createUserParams.safeParse(params);
 
   if (!parsedSchema.success)
     return { data: null, errors: formatZodErrors(parsedSchema.error) };
 
-  const { email, name, password, passwordConfirmation, rememberMe } =
-    parsedSchema.data;
+  const { email, name, password, passwordConfirmation } = parsedSchema.data;
 
   if (password !== passwordConfirmation) {
     return {
@@ -87,7 +89,6 @@ export async function createUser(
     data: {
       ...user,
       featureFlags: parseFeatureFlags(user.featureFlags),
-      rememberMe,
     },
     errors: null,
   };
@@ -106,6 +107,7 @@ export type UpdateUserParams = z.infer<typeof updateUserParams> | FormData;
 export async function updateUser(
   userId: string,
   params: UpdateUserParams,
+  request: Request,
 ): Promise<DataResult<Omit<User, "password">>> {
   const parsedSchema = updateUserParams.safeParse(params);
 
@@ -156,6 +158,11 @@ export async function updateUser(
       updatedAt: users.updatedAt,
       featureFlags: users.featureFlags,
     });
+
+  if (newPassword) {
+    const sessionId = await sessionIdFromRequest(request);
+    await deleteAllOtherSessions(sessionId, userId);
+  }
 
   return {
     data: {

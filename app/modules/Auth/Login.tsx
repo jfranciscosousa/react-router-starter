@@ -1,7 +1,6 @@
 import { Form, Link, useActionData, useLoaderData } from "react-router";
 import { Button } from "~/components/ui/button";
 import { Card, CardTitle } from "~/components/ui/card";
-import { CheckboxField } from "~/components/ui/checkbox-field";
 import { InputField } from "~/components/ui/input-field";
 import useIsLoading from "~/hooks/useIsLoading";
 import { LoginRouteAction, LoginRouteLoader } from "~/routes/__unauthed.login";
@@ -39,8 +38,6 @@ export default function Login() {
           errors={actionData?.errors}
           defaultValue={actionData?.original?.password}
         />
-
-        <CheckboxField name="rememberMe" label="Remember me" className="pb-4" />
 
         {redirectTo && (
           <input name="redirectTo" type="hidden" defaultValue={redirectTo} />

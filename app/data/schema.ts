@@ -1,7 +1,6 @@
 import { pgTable, uuid, text, timestamp, json } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
-// Users table
 export const users = pgTable("User", {
   id: uuid("id").primaryKey().defaultRandom(),
   email: text("email").unique().notNull(),
@@ -12,7 +11,19 @@ export const users = pgTable("User", {
   featureFlags: json("featureFlags").default({}).notNull(),
 });
 
-// Notes table
+export const sessions = pgTable("Session", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  ipAddress: text("ipAddress"),
+  location: text("location"),
+  userAgent: text("userAgent"),
+  device: text("device"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+  userId: uuid("userId")
+    .notNull()
+    .references(() => users.id),
+});
+
 export const notes = pgTable("Note", {
   id: uuid("id").primaryKey().defaultRandom(),
   content: text("content").notNull(),
@@ -23,9 +34,13 @@ export const notes = pgTable("Note", {
     .references(() => users.id),
 });
 
-// Relations
 export const usersRelations = relations(users, ({ many }) => ({
+  sessions: many(sessions),
   notes: many(notes),
+}));
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users),
 }));
 
 export const notesRelations = relations(notes, ({ one }) => ({
@@ -35,8 +50,6 @@ export const notesRelations = relations(notes, ({ one }) => ({
   }),
 }));
 
-// Export types
 export type User = typeof users.$inferSelect;
-export type NewUser = typeof users.$inferInsert;
+export type Session = typeof users.$inferSelect;
 export type Note = typeof notes.$inferSelect;
-export type NewNote = typeof notes.$inferInsert;

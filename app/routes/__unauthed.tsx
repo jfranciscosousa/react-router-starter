@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import { LoaderFunction, redirect } from "react-router";
 import LoggedOutLayout from "~/components/layouts/LoggedOutLayout";
-import { userFromRequest } from "~/web/auth.server";
+import { userFromRequest } from "~/data/sessions.server";
 import ErrorPage from "~/components/Error500Page";
 
 export const loader: LoaderFunction = async ({ request }) => {

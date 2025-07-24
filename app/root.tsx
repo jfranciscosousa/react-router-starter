@@ -9,7 +9,7 @@ import { Toaster } from "./components/ui/toaster";
 import { GLOBAL_ENV } from "./env/globalEnv";
 import { useRootLoaderData } from "./hooks/useRootLoaderData";
 import { cn } from "./utils";
-import { getCurrentTheme } from "./web/theme.server";
+import { getCurrentTheme } from "./data/theme.server";
 
 // Load the locale from the Accept-Language header to later
 // inject it on the app's context
