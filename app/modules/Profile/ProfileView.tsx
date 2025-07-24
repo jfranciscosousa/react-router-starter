@@ -6,11 +6,11 @@ import { InputField } from "~/components/ui/input-field";
 import { useToast } from "~/components/ui/use-toast";
 import useIsLoading from "~/hooks/useIsLoading";
 import useUser from "~/hooks/useUser";
-import { ProfileRouteActionType } from "~/routes/__authed.profile";
+import { ProfileRouteAction } from "~/routes/__authed.profile";
 
 export default function ProfileView() {
   const user = useUser();
-  const actionData = useActionData<ProfileRouteActionType>();
+  const actionData = useActionData<ProfileRouteAction>();
   const { toast } = useToast();
   const isLoading = useIsLoading();
 

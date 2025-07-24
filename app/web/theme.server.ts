@@ -1,13 +1,13 @@
 import { createCookie, redirect } from "react-router";
 
-export type ThemeType = "dark" | "light" | "system";
+export type Theme = "dark" | "light" | "system";
 
 const themeCookie = createCookie("theme", {
   sameSite: "lax",
   maxAge: 604_800, // one week,
 });
 
-export async function getCurrentTheme(request: Request): Promise<ThemeType> {
+export async function getCurrentTheme(request: Request): Promise<Theme> {
   const cookieHeader = request.headers.get("Cookie");
   const currentValue = await themeCookie.parse(cookieHeader);
 

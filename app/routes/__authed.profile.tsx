@@ -2,7 +2,7 @@ import { ActionFunctionArgs, type MetaFunction } from "react-router";
 import { updateUser } from "~/data/users.server";
 import { userIdFromRequest } from "~/web/auth.server";
 
-export type ProfileRouteActionType = typeof action;
+export type ProfileRouteAction = typeof action;
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const userId = await userIdFromRequest(request);

@@ -6,14 +6,15 @@ import type {
 import { login } from "~/data/users/login.server";
 import Login from "~/modules/Auth/Login";
 import { authenticate } from "~/web/auth.server";
+import { Route } from "./+types/__unauthed.login";
 
-export type LoginLoaderType = typeof loader;
+export type LoginRouteLoader = Route.ComponentProps["loaderData"];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => ({
   redirectTo: new URL(request.url).searchParams.get("redirectTo"),
 });
 
-export type LoginActionType = typeof action;
+export type LoginRouteAction = Route.ComponentProps["actionData"];
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();

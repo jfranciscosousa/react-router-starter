@@ -4,11 +4,11 @@ import { Card, CardTitle } from "~/components/ui/card";
 import { CheckboxField } from "~/components/ui/checkbox-field";
 import { InputField } from "~/components/ui/input-field";
 import useIsLoading from "~/hooks/useIsLoading";
-import { LoginActionType, LoginLoaderType } from "~/routes/__unauthed.login";
+import { LoginRouteAction, LoginRouteLoader } from "~/routes/__unauthed.login";
 
 export default function Login() {
-  const { redirectTo } = useLoaderData<LoginLoaderType>();
-  const actionData = useActionData<LoginActionType>();
+  const { redirectTo } = useLoaderData<LoginRouteLoader>();
+  const actionData = useActionData<LoginRouteAction>();
   const isLoading = useIsLoading();
 
   return (
