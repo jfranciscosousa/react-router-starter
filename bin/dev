@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Development server script
+# This script starts the development server with hot reloading
+
+set -e  # Exit on error
+
+# Load environment variables
+. bin/load-env
+
+echo "🚀 Starting development server..."
+
+# Start the development server
+pnpm react-router dev

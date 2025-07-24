@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Clean script
+# This script removes all build artifacts and cache files
+
+set -e  # Exit on error
+
+# Load environment variables
+. bin/load-env
+
+echo "🧹 Cleaning build artifacts and cache files..."
+
+# Remove build artifacts and cache
+rm -rf .eslintcache \
+       playwright-report \
+       build \
+       public/build \
+       .cache \
+       node_modules \
+       test-results
+
+echo "✅ Clean completed successfully!"

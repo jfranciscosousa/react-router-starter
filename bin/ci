@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Continuous Integration script for local dev
+# This script runs all CI checks: lint, type-check, and tests
+
+set -e  # Exit on error
+
+# Load environment variables
+. bin/load-env
+
+echo "🤖 Running CI pipeline..."
+
+echo "🔍 Running lint checks..."
+./bin/lint
+
+echo "🔍 Running type checks..."
+./bin/ts-check
+
+echo "🎭 Installing Playwright browsers..."
+pnpm dlx playwright install
+
+echo "🧪 Running all tests..."
+./bin/test
+
+echo "✅ CI pipeline completed successfully!"

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# TypeScript watch mode script
+# This script runs TypeScript compiler in watch mode with setup
+
+set -e  # Exit on error
+
+# Load environment variables
+. bin/load-env
+
+echo "🔍 Starting TypeScript watch mode..."
+
+echo "🔄 Generating Prisma client..."
+pnpm prisma generate
+
+echo "🔄 Generating React Router types..."
+pnpm react-router typegen
+
+echo "👀 Watching for TypeScript changes..."
+pnpm tsc --project tsconfig.json --noEmit --skipLibCheck --watch

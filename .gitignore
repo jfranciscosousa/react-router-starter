@@ -1,7 +1,7 @@
-node_modules
-.cache
-.output
-build
+node_modules/
+.cache/
+.output/
+build/
 public/build
 api/*
 .env

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Environment validation script
+# This script validates the environment configuration
+
+set -e  # Exit on error
+
+# Load environment variables
+. bin/load-env
+
+echo "✅ Validating environment configuration..."
+
+# Run the validation task
+pnpm tsx tasks/validateConfig.ts
+
+echo "✅ Environment validation completed successfully!"

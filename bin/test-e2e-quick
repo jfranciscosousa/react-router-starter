@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Quick end-to-end test script
+# This script runs Playwright e2e tests without rebuilding
+
+set -e  # Exit on error
+
+# Load test environment variables (automatically uses .env.test)
+. bin/load-env
+
+echo "🎭 Running end-to-end tests (quick mode)..."
+
+pnpm playwright test
+
+echo "✅ Quick end-to-end tests completed successfully!"

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Start production server script
+# This script starts the built application server
+
+set -e  # Exit on error
+
+# Load environment variables
+. bin/load-env
+
+SERVER_FILE="build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js"
+
+if [ ! -f "$SERVER_FILE" ]; then
+    echo "❌ Server file not found: $SERVER_FILE"
+    echo "💡 Run './bin/build' first to build the application"
+    exit 1
+fi
+
+echo "🚀 Starting production server..."
+
+# Start the production server
+pnpm react-router-serve "$SERVER_FILE"

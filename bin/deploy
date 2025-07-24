@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Deployment script
+# This script validates configuration, generates Prisma client, pushes database, and builds
+
+set -e  # Exit on error
+
+# Load environment variables
+. bin/load-env
+
+echo "🚀 Starting deployment process..."
+
+echo "✅ Validating configuration..."
+pnpm tsx tasks/validateConfig.ts
+
+echo "🔄 Generating Prisma client..."
+pnpm prisma generate
+
+echo "📊 Pushing database schema..."
+pnpm prisma db push
+
+echo "🔨 Building application..."
+bin/build
+
+echo "✅ Deployment process completed successfully!"
+echo "📁 Build files are ready in: build/"

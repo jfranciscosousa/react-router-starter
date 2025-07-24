@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# End-to-end test setup script
+# This script prepares database and builds for e2e tests
+
+set -e  # Exit on error
+
+# Load test environment variables (automatically uses .env.test)
+. bin/load-env
+
+echo "🎭 Building end-to-end test dependencies"
+
+pnpm prisma db push -- --force
+
+pnpm react-router build
+
+echo "✅ End-to-end dependencies built successfully!"

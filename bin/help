@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# Help script
+# This script shows available commands and their descriptions
+
+cat << 'EOF'
+📋 Available Scripts
+
+🔨 Build Commands:
+  ./bin/build         Build the application for production
+  ./bin/clean         Clean build artifacts and cache files
+
+🚀 Development Commands:
+  ./bin/dev           Start development server with hot reloading
+  ./bin/start         Start production server (requires build first)
+
+🔍 Code Quality Commands:
+  ./bin/lint          Run ESLint on the codebase
+  ./bin/ts-check      Run TypeScript type checking
+  ./bin/ts-watch      Run TypeScript type checking in watch mode
+
+🧪 Test Commands:
+  ./bin/test              Run all tests (unit + e2e)
+  ./bin/test-vitest       Run unit tests with Vitest
+  ./bin/test-vitest-watch Run unit tests in watch mode
+  ./bin/test-e2e          Run e2e tests with database setup
+  ./bin/test-e2e-quick    Run e2e tests without rebuild
+  ./bin/test-e2e-ui       Run e2e tests with Playwright UI
+
+🚀 Deployment Commands:
+  ./bin/deploy        Full deployment process
+  ./bin/validate-env  Validate environment configuration
+
+🤖 CI/CD Commands:
+  ./bin/ci           Run full CI pipeline (lint, type-check, test)
+
+🔧 Utilities:
+  ./bin/dotenv       Advanced dotenv utility for loading .env files
+  ./bin/load-env     Centralized environment loading (used by other scripts)
+
+🌍 Environment Handling:
+  • Regular scripts automatically load .env
+  • Test scripts (test-*) automatically load .env.test
+  • Environment variables are loaded only once to prevent conflicts
+  • Calling scripts from other scripts reuses already loaded environment
+
+💡 Usage Examples:
+  ./bin/dev                    # Start development
+  ./bin/build && ./bin/start   # Build and start production
+  ./bin/test-vitest-watch      # Develop with tests running
+  ./bin/ci                     # Run before committing
+
+EOF

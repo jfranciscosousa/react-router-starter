@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Vitest watch mode script
+# This script runs unit tests in watch mode
+
+set -e  # Exit on error
+
+# Load environment variables (test script - uses .env.test)
+. bin/load-env
+
+echo "👀 Running unit tests in watch mode..."
+
+# Run Vitest in watch mode
+pnpm vitest
+
+echo "✅ Vitest watch mode ended"

@@ -7,7 +7,7 @@ import { devices } from "@playwright/test";
 const config: PlaywrightTestConfig = {
   testDir: "./tests/e2e",
   webServer: {
-    command: "npm run start",
+    command: "bin/start",
     port: 3001,
   },
   /* Maximum time one test can run for. */

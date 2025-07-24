@@ -65,16 +65,15 @@ jobs:
 
       - name: Lint
         run: |
-          pnpm prisma generate
-          pnpm lint
-          pnpm ts-check
+          bin/lint
+          bin/ts-check
 
       - name: Vitest
-        run: pnpm test:vitest
+        run: bin/test-vitest
 
       - name: E2E
         run: |
-          pnpm test:e2e
+          bin/test-e2e
         env:
           SECRET_KEY_BASE: supersecret42069
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/react-router-prisma-starter-test

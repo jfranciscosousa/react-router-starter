@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# End-to-end test UI script
+# This script runs Playwright e2e tests with UI mode
+
+set -e  # Exit on error
+
+# Load test environment variables (automatically uses .env.test)
+. bin/load-env
+
+bin/test-e2e-setup
+
+echo "🎭 Running end-to-end tests with UI..."
+
+pnpm playwright test --ui
+
+echo "✅ End-to-end tests UI ended"

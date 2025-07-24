@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Build script for the React Router application
+# This script builds the application for production
+
+set -e  # Exit on error
+
+# Load environment variables
+. bin/load-env
+
+echo "🔨 Building React Router application..."
+
+pnpm prisma generate
+pnpm react-router build
+
+echo "✅ Build completed successfully!"
+echo "📁 Build files are in: build/"

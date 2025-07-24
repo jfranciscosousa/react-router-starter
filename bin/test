@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Test script
+# This script runs all tests (unit tests and e2e tests)
+
+set -e  # Exit on error
+
+# Load environment variables (test script - uses .env.test)
+. bin/load-env
+
+echo "🧪 Running all tests..."
+
+echo "📋 Running unit tests with Vitest..."
+./bin/test-vitest
+
+echo "🎭 Running end-to-end tests with Playwright..."
+./bin/test-e2e
+
+echo "✅ All tests completed successfully!"
