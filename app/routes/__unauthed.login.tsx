@@ -7,6 +7,8 @@ import { login } from "~/data/users/login.server";
 import Login from "~/modules/Auth/Login";
 import { authenticate } from "~/web/auth.server";
 
+export const config = { runtime: "edge" };
+
 export type LoginLoaderType = typeof loader;
 
 export const loader = async ({ request }: LoaderFunctionArgs) => ({

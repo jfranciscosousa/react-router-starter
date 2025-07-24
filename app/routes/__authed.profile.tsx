@@ -2,6 +2,8 @@ import { ActionFunctionArgs, type MetaFunction } from "react-router";
 import { updateUser } from "~/data/users.server";
 import { userIdFromRequest } from "~/web/auth.server";
 
+export const config = { runtime: "edge" };
+
 export type ProfileRouteActionType = typeof action;
 
 export const action = async ({ request }: ActionFunctionArgs) => {

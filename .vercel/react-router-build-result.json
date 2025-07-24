@@ -1,24 +1,24 @@
 {
   "buildManifest": {
     "serverBundles": {
-      "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0": {
-        "id": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-        "file": "build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+      "edge_eyJydW50aW1lIjoiZWRnZSJ9": {
+        "id": "edge_eyJydW50aW1lIjoiZWRnZSJ9",
+        "file": "build/server/edge_eyJydW50aW1lIjoiZWRnZSJ9/index.js",
         "config": {
-          "runtime": "nodejs"
+          "runtime": "edge"
         }
       }
     },
     "routeIdToServerBundleId": {
-      "routes/healthcheck": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/__unauthed.signup": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/__unauthed.login": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/__authed.profile": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/__authed.notes": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/_index": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/logout": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/theme": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
-      "routes/$": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
+      "routes/healthcheck": "edge_eyJydW50aW1lIjoiZWRnZSJ9",
+      "routes/__unauthed.signup": "edge_eyJydW50aW1lIjoiZWRnZSJ9",
+      "routes/__unauthed.login": "edge_eyJydW50aW1lIjoiZWRnZSJ9",
+      "routes/__authed.profile": "edge_eyJydW50aW1lIjoiZWRnZSJ9",
+      "routes/__authed.notes": "edge_eyJydW50aW1lIjoiZWRnZSJ9",
+      "routes/_index": "edge_eyJydW50aW1lIjoiZWRnZSJ9",
+      "routes/logout": "edge_eyJydW50aW1lIjoiZWRnZSJ9",
+      "routes/theme": "edge_eyJydW50aW1lIjoiZWRnZSJ9",
+      "routes/$": "edge_eyJydW50aW1lIjoiZWRnZSJ9"
     },
     "routes": {
       "root": {
@@ -33,14 +33,16 @@
         "file": "app/routes/healthcheck.tsx",
         "path": "healthcheck",
         "config": {
-          "runtime": "nodejs"
+          "runtime": "edge"
         }
       },
       "routes/__unauthed": {
         "id": "routes/__unauthed",
         "parentId": "root",
         "file": "app/routes/__unauthed.tsx",
-        "config": {}
+        "config": {
+          "runtime": "edge"
+        }
       },
       "routes/__unauthed.signup": {
         "id": "routes/__unauthed.signup",
@@ -48,7 +50,7 @@
         "file": "app/routes/__unauthed.signup.tsx",
         "path": "signup",
         "config": {
-          "runtime": "nodejs"
+          "runtime": "edge"
         }
       },
       "routes/__unauthed.login": {
@@ -57,14 +59,16 @@
         "file": "app/routes/__unauthed.login.tsx",
         "path": "login",
         "config": {
-          "runtime": "nodejs"
+          "runtime": "edge"
         }
       },
       "routes/__authed": {
         "id": "routes/__authed",
         "parentId": "root",
         "file": "app/routes/__authed.tsx",
-        "config": {}
+        "config": {
+          "runtime": "edge"
+        }
       },
       "routes/__authed.profile": {
         "id": "routes/__authed.profile",
@@ -72,7 +76,7 @@
         "file": "app/routes/__authed.profile.tsx",
         "path": "profile",
         "config": {
-          "runtime": "nodejs"
+          "runtime": "edge"
         }
       },
       "routes/__authed.notes": {
@@ -81,7 +85,7 @@
         "file": "app/routes/__authed.notes.tsx",
         "path": "notes",
         "config": {
-          "runtime": "nodejs"
+          "runtime": "edge"
         }
       },
       "routes/_index": {
@@ -90,7 +94,7 @@
         "file": "app/routes/_index.tsx",
         "index": true,
         "config": {
-          "runtime": "nodejs"
+          "runtime": "edge"
         }
       },
       "routes/logout": {
@@ -99,7 +103,7 @@
         "file": "app/routes/logout.tsx",
         "path": "logout",
         "config": {
-          "runtime": "nodejs"
+          "runtime": "edge"
         }
       },
       "routes/theme": {
@@ -108,7 +112,7 @@
         "file": "app/routes/theme.tsx",
         "path": "theme",
         "config": {
-          "runtime": "nodejs"
+          "runtime": "edge"
         }
       },
       "routes/$": {
@@ -117,7 +121,7 @@
         "file": "app/routes/$.tsx",
         "path": "*",
         "config": {
-          "runtime": "nodejs"
+          "runtime": "edge"
         }
       }
     }
