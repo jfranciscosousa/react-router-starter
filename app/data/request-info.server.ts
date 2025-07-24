@@ -15,7 +15,7 @@ export interface DeviceInfo {
 }
 
 export interface RequestInfo {
-  ip: string;
+  ipAddress: string;
   userAgent: string;
   location?: string | null;
   device?: string | null;
@@ -131,23 +131,6 @@ async function getLocationFromIP(ip: string): Promise<LocationInfo | null> {
 }
 
 /**
- * Get location from Accept-Language header as fallback
- */
-function getLanguageLocation(request: Request): LocationInfo | null {
-  const acceptLanguage = request.headers.get("accept-language");
-  if (!acceptLanguage) return null;
-
-  const primaryLang = acceptLanguage.split(",")[0].split("-");
-
-  if (primaryLang.length < 2) return null;
-
-  return {
-    region: primaryLang[1].toUpperCase(),
-    source: "accept-language",
-  };
-}
-
-/**
  * Parse user agent for device information
  */
 function parseUserAgent(userAgent: string): DeviceInfo {
@@ -190,73 +173,39 @@ function parseUserAgent(userAgent: string): DeviceInfo {
 /**
  * Extract comprehensive information from a Request object
  */
-export async function getRequestInfo(
-  request: Request,
-  options: RequestInfoOptions = {},
-): Promise<RequestInfo> {
-  const {
-    includeLocation = false,
-    includeDevice = false,
-    geoProvider = "both",
-    fallbackToLanguage = true,
-  } = options;
-
-  const ip = getClientIP(request);
+export async function getRequestInfo(request: Request): Promise<RequestInfo> {
+  const ipAddress = getClientIP(request);
   const userAgent = request.headers.get("user-agent") || "unknown";
 
   let location: LocationInfo | null = null;
-  if (includeLocation) {
-    // Try headers first if requested
-    if (geoProvider === "headers" || geoProvider === "both") {
-      location = getLocationFromHeaders(request);
-    }
 
-    // Try IP lookup if no location from headers
-    if (!location && (geoProvider === "ipapi" || geoProvider === "both")) {
-      location = await getLocationFromIP(ip);
-    }
+  // Try headers
+  location = getLocationFromHeaders(request);
 
-    // Fallback to language header
-    if (!location && fallbackToLanguage) {
-      location = getLanguageLocation(request);
-    }
+  // Try IP lookup if no location from headers
+  if (!location) {
+    location = await getLocationFromIP(ipAddress);
   }
 
   let device: DeviceInfo | null = null;
-  if (includeDevice && userAgent !== "unknown") {
+  if (userAgent !== "unknown") {
     device = parseUserAgent(userAgent);
   }
 
   return {
-    ip,
+    ipAddress,
     userAgent,
     location: location
-      ? `${location?.city || "Unknown city"}, ${location?.region || "Unknown region"}, ${location?.country || "Unknown country"}`
+      ? `${capitalizeFirstLetter(location?.city) || "Unknown city"}, ${location?.region || "Unknown region"}, ${location?.country || "Unknown country"}`
       : undefined,
     device: device
-      ? `${device.device || "Unknown device"}, ${device.browser || "Unknown browser"}`
+      ? `${capitalizeFirstLetter(device.device) || "Unknown device"}, ${device.browser || "Unknown browser"}`
       : undefined,
   };
 }
 
-/**
- * Utility function to get just IP and User Agent (most common use case)
- */
-export function getBasicRequestInfo(
-  request: Request,
-): Pick<RequestInfo, "ip" | "userAgent"> {
-  return {
-    ip: getClientIP(request),
-    userAgent: request.headers.get("user-agent") || "unknown",
-  };
-}
+function capitalizeFirstLetter(word?: string) {
+  if (!word) return word;
 
-/**
- * Check if request is from a bot
- */
-export function isBot(request: Request): boolean {
-  const userAgent = request.headers.get("user-agent") || "";
-  return /bot|crawler|spider|scraper|curl|wget|python|java|go-http|okhttp/i.test(
-    userAgent,
-  );
+  return String(word).charAt(0).toUpperCase() + String(word).slice(1);
 }

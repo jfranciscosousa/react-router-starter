@@ -112,6 +112,12 @@ export async function listsSessions(userId: string) {
   });
 }
 
+export async function deleteSession(sessionId: string, userId: string) {
+  return db
+    .delete(sessions)
+    .where(and(eq(sessions.id, sessionId), eq(sessions.userId, userId)));
+}
+
 export async function deleteAllSessions(userId: string) {
   return db.delete(sessions).where(eq(sessions.userId, userId));
 }
