@@ -6,7 +6,7 @@
 set -e  # Exit on error
 
 # Load environment variables
-. bin/load-env .env
+ENV_FILE=.env . bin/load-env
 
 SERVER_FILE="build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js"
 

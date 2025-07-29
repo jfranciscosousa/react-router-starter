@@ -6,7 +6,7 @@
 set -e  # Exit on error
 
 # Load environment variables
-. bin/load-env .env
+ENV_FILE=.env . bin/load-env
 
 echo "🔍 Starting TypeScript watch mode..."
 

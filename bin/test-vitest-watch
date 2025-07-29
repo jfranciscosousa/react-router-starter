@@ -5,6 +5,9 @@
 
 set -e  # Exit on error
 
+# Load environment variables
+ENV_FILE=.env . bin/load-env
+
 echo "👀 Running unit tests in watch mode..."
 
 # Run Vitest in watch mode

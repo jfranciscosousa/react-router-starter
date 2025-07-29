@@ -11,7 +11,7 @@ if [ -n "${ENV_LOADED:-}" ]; then
     return 0 2>/dev/null || exit 0
 fi
 
-ENV_FILE="$1"
+ENV_FILE="${ENV_FILE:-$1}"
 
 # Load environment if file exists
 if [ -f "$ENV_FILE" ]; then

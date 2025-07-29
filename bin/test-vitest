@@ -6,7 +6,7 @@
 set -e  # Exit on error
 
 # Load environment variables (test script - uses .env.test)
-. bin/load-env .env.test
+ENV_FILE=.env.test . bin/load-env
 
 echo "🧪 Running unit tests with Vitest..."
 
