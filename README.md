@@ -1,66 +1,11 @@
 # React Router 7 + Drizzle Starter
 
-A modern, production-ready full-stack web application starter built with **React Router 7**, **Drizzle ORM**, and **PostgreSQL**. Features authentication, internationalization, theming, and comprehensive tooling.
+My `react-router` and `drizzle` starter. With `ssr` mode by default, simple user + password auth.
 
 ## 🚀 Live Demo
 
-- [Deployed Application](https://react-router-starter.fly.dev/)
+- [Deployed Application](https://react-router-jfranciscosousa.vercel.app/)
 - [React Router 7 Documentation](https://reactrouter.com/home)
-
-## ✨ Features
-
-### Core Functionality
-- **🔐 Authentication** - Cookie-based auth with secure sessions
-- **📝 Notes App** - Full CRUD operations with user-specific data
-- **👤 User Profiles** - User registration, login, and profile management
-- **🌍 Internationalization** - Automatic locale detection from Accept-Language headers
-- **🎨 Theming** - Light/dark/system theme support with persistent preferences
-
-### Technical Stack
-- **⚡ React Router 7** - Latest routing and SSR capabilities
-- **🗄️ Drizzle ORM + PostgreSQL** - Type-safe database ORM with SQL-like queries
-- **🎨 Tailwind CSS + shadcn/ui** - Modern styling with beautiful components
-- **🔒 Security** - Argon2 password hashing, secure cookies, CSRF protection
-- **📱 Responsive Design** - Mobile-first approach with modern UI patterns
-
-### Developer Experience
-- **📦 PNPM** - Fast, disk space efficient package manager
-- **🧪 Testing** - Playwright E2E + Vitest unit testing
-- **🔍 Type Safety** - Full TypeScript coverage with strict mode
-- **🚨 Code Quality** - ESLint, Prettier, Husky pre-commit hooks
-- **🔧 Tooling** - Comprehensive bin scripts for development workflow
-
-## 🏗️ Architecture
-
-### Project Structure
-```
-├── app/                    # Application source code
-│   ├── components/         # Reusable UI components
-│   │   ├── layouts/        # Layout components
-│   │   └── ui/             # shadcn/ui components (React 19 compatible)
-│   ├── data/               # Data access layer
-│   │   ├── schema.ts       # Drizzle database schema
-│   │   ├── users.server.ts # User operations
-│   │   ├── notes.server.ts # Notes operations
-│   │   └── utils/          # Database utilities
-│   ├── modules/            # Feature modules
-│   │   ├── Auth/           # Authentication flows
-│   │   ├── Notes/          # Notes management
-│   │   └── Profile/        # User profile
-│   ├── routes/             # Route definitions
-│   ├── hooks/              # Custom React hooks
-│   ├── env/                # Environment configuration
-│   └── web/                # Server-side utilities
-├── bin/                    # Development scripts
-├── drizzle/                # Database migrations (generated)
-├── tests/                  # E2E and unit tests
-└── public/                 # Static assets
-```
-
-### Database Schema
-- **Users** - Authentication and profile data with feature flags
-- **Notes** - User-specific note content with timestamps
-- **Relations** - Proper foreign key relationships with cascade operations
 
 ## 🚀 Quick Start
 
@@ -73,7 +18,7 @@ A modern, production-ready full-stack web application starter built with **React
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:jfranciscosousa/react-router-starter.git
    cd react-router-starter
    ```
 
@@ -85,17 +30,18 @@ A modern, production-ready full-stack web application starter built with **React
 3. **Set up environment**
    ```bash
    cp .env.example .env
+   cp .env.test.sample .env.test
    # Edit .env with your database URL and secrets
    ```
 
 4. **Initialize database**
    ```bash
-   ./bin/setup-drizzle  # Sets up database schema with Drizzle
+   ./bin/setup-drizzle  # Sets up database with Drizzle
    ```
 
 5. **Start development**
    ```bash
-   ./bin/dev       # Starts development server at http://localhost:3000
+   ./bin/dev       # Starts development server at http://localhost:5173
    ```
 
 ## 🛠️ Development
@@ -200,68 +146,27 @@ Vitest-based unit testing:
 
 ## 🚀 Deployment
 
-### Fly.io (Recommended)
-
-The project is configured for Fly.io deployment:
-
-```bash
-# Deploy manually
-fly deploy --remote-only
-
-# Or use the deployment script
-./bin/deploy
-```
-
-### GitHub Actions
-
-Automated deployment is configured:
-1. Set `FLY_API_TOKEN` in your GitHub repository secrets
-2. Push to main branch triggers automatic deployment
-
 ### Vercel
 
-Also supports Vercel deployment with included `vercel.json` configuration.
+Any app that uses this repo as the template can be deployed
 
-## 🔧 Technology Details
-
-### React 19 Compatibility
-
-The project is fully updated for React 19:
-- **No forwardRef** - Direct ref props on components
-- **Modern patterns** - Uses latest React Router 7 conventions
-- **Type safety** - Full TypeScript coverage with React 19 types
-
-### Authentication System
-
-- **Secure cookies** - HttpOnly, SameSite strict
-- **Password hashing** - Argon2 for production-grade security
-- **Session management** - Configurable expiration and remember-me
-- **Route protection** - Automatic redirects for auth state
-
-### Performance Optimizations
-
-- **SSR** - Server-side rendering for better SEO and performance
-- **Code splitting** - Automatic route-based splitting
-- **Modern bundling** - Vite-powered build system
-- **Efficient caching** - Optimized asset and data caching
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes
-4. Run tests: `./bin/ci`
-5. Commit: `git commit -m 'Add amazing feature'`
-6. Push: `git push origin feature/amazing-feature`
-7. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## 🙏 Acknowledgments
+## 🔧 Technologies
 
 - [React Router](https://reactrouter.com/) - Modern React framework
 - [Drizzle ORM](https://orm.drizzle.team/) - Type-safe database ORM
 - [shadcn/ui](https://ui.shadcn.com/) - Beautiful, accessible components
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+
+## Caveats
+
+The authentication is not production ready. I use this for mainly for MVPs. It's secure but it's lacking:
+- brute force protection
+- password recovery via email
+
+We are already tracking user sessions and we support invalidating user sessions as well.
+
+Consider something like [Clerk](https://clerk.com/) instead if you don't want to implement those things yourself.
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
