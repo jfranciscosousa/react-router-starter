@@ -1,0 +1,72 @@
+#!/bin/bash
+
+set -e
+
+echo "🚀 Setting up React Router Starter..."
+
+# Copy environment files
+echo "📄 Copying environment files..."
+cp .env.sample .env
+cp .env.test.sample .env.test
+
+# Prompt for database name
+echo ""
+read -p "📦 Enter database name (without environment suffix): " db_name
+
+if [ -z "$db_name" ]; then
+  echo "❌ Database name cannot be empty"
+  exit 1
+fi
+
+# Update .env file with development database
+dev_db_name="${db_name}_dev"
+sed -i "s|DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE|DATABASE_URL=postgresql://postgres:password@localhost:5432/${dev_db_name}|g" .env
+
+# Update .env.test file with test database
+test_db_name="${db_name}_test"
+sed -i "s|DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE|DATABASE_URL=postgresql://postgres:password@localhost:5432/${test_db_name}|g" .env.test
+
+echo "✅ Environment files configured:"
+echo "   - Development DB: ${dev_db_name}"
+echo "   - Test DB: ${test_db_name}"
+
+# Install dependencies
+echo ""
+echo "📦 Installing dependencies..."
+pnpm install
+
+# Create databases
+echo ""
+echo "🗄️  Creating databases..."
+echo "Creating development database: ${dev_db_name}"
+createdb "${dev_db_name}" 2>/dev/null || echo "   Database ${dev_db_name} already exists (or createdb failed)"
+
+echo "Creating test database: ${test_db_name}"
+createdb "${test_db_name}" 2>/dev/null || echo "   Database ${test_db_name} already exists (or createdb failed)"
+
+# Run Drizzle setup for development database
+echo ""
+echo "🔧 Setting up Drizzle schema for development database..."
+ENV_FILE=.env bin/setup-drizzle || {
+  echo "❌ Failed to setup Drizzle schema for development database"
+  exit 1
+}
+
+# Run Drizzle setup for test database
+echo ""
+echo "🔧 Setting up Drizzle schema for test database..."
+ENV_FILE=.env.test bin/setup-drizzle || {
+  echo "❌ Failed to setup Drizzle schema for test database"
+  exit 1
+}
+
+echo ""
+echo "🎉 Setup complete! Your project is ready to go:"
+echo "   ✅ Dependencies installed"
+echo "   ✅ Environment files configured"
+echo "   ✅ Databases created: ${dev_db_name} and ${test_db_name}"
+echo "   ✅ Database schemas applied"
+echo ""
+echo "Next steps:"
+echo "   - Run 'bin/dev' to start the development server"
+echo "   - Run 'bin/test' to run tests"
