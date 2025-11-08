@@ -9,7 +9,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:17-alpine
+        image: postgres:18-alpine
         env:
           POSTGRES_DB: react-router-starter-test
           POSTGRES_PASSWORD: postgres
