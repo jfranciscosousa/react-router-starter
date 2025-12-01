@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@eslint/compat": "^1.4.1",
-    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.1",
     "@faker-js/faker": "^10.1.0",
     "@playwright-testing-library/test": "^4.5.0",
